@@ -1,5 +1,6 @@
 package com.cc.service;
 
+import com.cc.dto.CartDTO;
 import com.cc.pojo.ProductInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,9 +33,16 @@ public interface ProductInfoService {
 
     ProductInfo save(ProductInfo productInfo);
 
-    //加库存
+    /**
+     * 加库存
+     * @param cartDTOList 购物车DTO
+     */
+    void increaseStock(List<CartDTO> cartDTOList);
 
-    //减库存
-
+    /**
+     * 减库存
+     * @param cartDTOList 购物车DTO
+     */
+    void decreaseStock(List<CartDTO> cartDTOList);
 
 }

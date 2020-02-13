@@ -1,27 +1,30 @@
-package com.cc.pojo;
+package com.cc.dto;
 
 import com.cc.enums.OrderStatusEnum;
 import com.cc.enums.PayStatusEnum;
+import com.cc.pojo.OrderDetail;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 订单表
+ * 订单DTO DTO:数据传输对象
  *
  * @author cchen
  * @version 1.0
- * @date 2020/2/12 11:07
+ * @date 2020/2/12 18:17
  */
 @Data
-@Entity
-@DynamicUpdate
-public class OrderMaster {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrderMasterDTO {
 
     /**
      * 订单id
@@ -57,12 +60,12 @@ public class OrderMaster {
     /**
      * 订单状态 默认 0：新订单
      */
-    private Integer orderStatus = OrderStatusEnum.NEW.getValue();
+    private Integer orderStatus;
 
     /**
      * 支付状态 默认 0：等待支付
      */
-    private Integer payStatus = PayStatusEnum.WAIT.getValue();
+    private Integer payStatus;
 
     /**
      * 创建时间
@@ -73,4 +76,9 @@ public class OrderMaster {
      * 修改时间
      */
     private Date updateTime;
+
+    /**
+     * 订单详情列表
+     */
+    private List<OrderDetail> orderDetailList;
 }

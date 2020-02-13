@@ -1,6 +1,7 @@
 package com.cc.pojo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
  * @date 2020/2/12 11:29
  */
 @Data
+@Builder
 @Entity
 @DynamicUpdate
 @NoArgsConstructor
@@ -68,6 +70,4 @@ public class OrderDetail {
      * 修改时间
      */
     private String updateTime;
-
-
 }

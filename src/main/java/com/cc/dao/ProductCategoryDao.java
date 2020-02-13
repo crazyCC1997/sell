@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
+ * 商品类目dao
+ *
  * @author cchen
  * @version 1.0
  * @date 2020/2/10 20:58

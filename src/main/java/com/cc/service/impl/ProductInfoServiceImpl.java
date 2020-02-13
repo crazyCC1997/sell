@@ -1,13 +1,19 @@
 package com.cc.service.impl;
 
+import com.cc.dao.OrderMasterDao;
 import com.cc.dao.ProductInfoDao;
+import com.cc.dto.CartDTO;
 import com.cc.enums.ProductStatusEnum;
+import com.cc.enums.ResultEnum;
+import com.cc.exception.SellException;
+import com.cc.pojo.OrderMaster;
 import com.cc.pojo.ProductInfo;
 import com.cc.service.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,5 +48,37 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Override
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDao.save(productInfo);
+    }
+
+    @Override
+    @Transactional
+    public void increaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO : cartDTOList) {
+            ProductInfo productInfo = productInfoDao.findOne(cartDTO.getProductId());
+            if(null == productInfo){
+                throw  new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            Integer stock = productInfo.getProductStock() + cartDTO.getProductQuantity();
+            productInfo.setProductStock(stock);
+            productInfoDao.save(productInfo);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void decreaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO : cartDTOList) {
+            ProductInfo productInfo = productInfoDao.findOne(cartDTO.getProductId());
+            if(null == productInfo){
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            Integer stock = productInfo.getProductStock() - cartDTO.getProductQuantity();
+            if(stock >= 0){
+                productInfo.setProductStock(stock);
+                productInfoDao.save(productInfo);
+            }else {
+                throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
+        }
     }
 }
