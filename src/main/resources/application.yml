@@ -6,6 +6,9 @@ spring:
     url: jdbc:mysql://192.168.0.106/wenxinorder?characterEncoding=utf-8&useSSL=false&useUnicode=true&serverTimezone=Asia/Shanghai
   jpa:
     show-sql: true
+  #
+  jackson:
+    default-property-inclusion: non_null
 #项目url前缀
 server:
   context-path: /sell

@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.xml.transform.Result;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -82,9 +81,9 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 //            cartDTOList.add(cartDTO);
         }
         OrderMaster orderMaster = new OrderMaster();
-        //先拷贝,再设置。以免orderMasterDTO中的null值覆盖
+        //订单orderId需要返回给前端，所以直接设置orderMasterDTO的orderId再拷贝
+        orderMasterDTO.setOrderId(orderId);
         BeanUtils.copyProperties(orderMasterDTO, orderMaster);
-        orderMaster.setOrderId(orderId);
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getValue());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getValue());

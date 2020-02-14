@@ -3,6 +3,9 @@ package com.cc.dto;
 import com.cc.enums.OrderStatusEnum;
 import com.cc.enums.PayStatusEnum;
 import com.cc.pojo.OrderDetail;
+import com.cc.utils.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +27,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //过时
+//@JsonInclude(JsonInclude.Include.NON_NULL)   //只要求json字符串中不为空的返回
 public class OrderMasterDTO {
 
     /**
@@ -70,15 +75,17 @@ public class OrderMasterDTO {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
     /**
      * 修改时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     /**
-     * 订单详情列表
-     */
-    private List<OrderDetail> orderDetailList;
+ * 订单详情列表
+ */
+private List<OrderDetail> orderDetailList;
 }
