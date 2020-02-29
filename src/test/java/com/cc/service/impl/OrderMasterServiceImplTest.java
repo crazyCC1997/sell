@@ -51,17 +51,17 @@ public class OrderMasterServiceImplTest {
                 OrderDetail
                         .builder()
                         .productId("1234567")
-                        .productQuantity(5)
+                        .productQuantity(2)
                         .build()
         );
 
         OrderMasterDTO orderMasterDTO = orderMasterService.create(
                 OrderMasterDTO
                         .builder()
-                        .buyerAddress("上海滩")
-                        .buyerName("许文强")
+                        .buyerAddress("东北")
+                        .buyerName("电棍")
                         .buyerOpenid(BUYER_OPENID)
-                        .buyerPhone("18936549088")
+                        .buyerPhone("18936548888")
                         .orderDetailList(orderDetailList)
                         .build()
         );
@@ -102,5 +102,13 @@ public class OrderMasterServiceImplTest {
         OrderMasterDTO orderMasterDTO = orderMasterService.findOne(ORDER_ID);
         OrderMasterDTO result = orderMasterService.paid(orderMasterDTO);
         Assert.assertEquals(PayStatusEnum.SUCCESS.getValue(), result.getPayStatus());
+    }
+
+    @Test
+    public void findAllList(){
+        PageRequest pageRequest = new PageRequest(0, 10);
+        Page<OrderMasterDTO> orderMasterDTOPage = orderMasterService.findList(pageRequest);
+//        Assert.assertNotEquals(0, orderMasterDTOPage.getTotalElements());
+        Assert.assertTrue("查询所有的订单列表", orderMasterDTOPage.getTotalElements() > 0);
     }
 }

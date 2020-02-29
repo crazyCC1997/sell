@@ -9,6 +9,34 @@ spring:
   #
   jackson:
     default-property-inclusion: non_null
+  #redis
+  redis:
+    host: 192.168.0.106
+    port: 6379
 #项目url前缀
 server:
   context-path: /sell
+
+#微信公众号配置
+wechat:
+  #公众账号、授权
+  mpAppId: wxd898fcb01713c658
+  #29d8a650db31472aa87800e3b0d739f2
+  mpAppSecret: 29d8a650db31472aa87800e3b0d739f2
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
+  #支付/商户号
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+  #发起支付时不需要，退款需要
+  keyPath: /var/weixin_cert/h5.p12
+  #异步通知地址
+  notifyUrl: http://cchen1997.natapp1.cc/sell/pay/notify
+
+#项目url
+projectUrl:
+  wechatMpAuthorize: http://cchen1997.natapp1.cc
+  wechatOpenAuthorize: http://cchen1997.natapp1.cc
+  sell: http://cchen1997.natapp1.cc
+
+

@@ -1,4 +1,4 @@
-package com.cc.controller;
+package com.cc.controller.buyer;
 
 import com.cc.pojo.ProductCategory;
 import com.cc.pojo.ProductInfo;
@@ -49,7 +49,7 @@ public class BuyerProductInfoController {
         List<Integer> categoryTypeList = upProductList.stream()
                 .map(e -> e.getCategoryType())
                 .collect(Collectors.toList());
-        List<ProductCategory> ProductCategoryList = productCategoryService.findByCategoryTypeIn(categoryTypeList);
+        List<ProductCategory> ProductCategoryList = productCategoryService.findByCategoryType(categoryTypeList);
         //3.数据拼装
         ArrayList<ProductVo> productVoList = new ArrayList<>();
         for (ProductCategory productCategory : ProductCategoryList) {

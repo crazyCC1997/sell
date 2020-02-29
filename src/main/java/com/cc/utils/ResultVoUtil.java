@@ -2,8 +2,6 @@ package com.cc.utils;
 
 import com.cc.vo.ResultVo;
 
-import javax.xml.transform.Result;
-
 /**
  * 结果集工具类
  *

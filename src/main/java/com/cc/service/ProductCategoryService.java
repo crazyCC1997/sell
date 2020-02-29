@@ -22,7 +22,7 @@ public interface ProductCategoryService {
      * @param categoryTypeList
      * @return
      */
-    List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
+    List<ProductCategory> findByCategoryType(List<Integer> categoryTypeList);
 
     ProductCategory save(ProductCategory productCategory);
 }

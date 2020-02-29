@@ -3,7 +3,10 @@ package com.cc.dto;
 import com.cc.enums.OrderStatusEnum;
 import com.cc.enums.PayStatusEnum;
 import com.cc.pojo.OrderDetail;
+import com.cc.pojo.OrderMaster;
+import com.cc.utils.EnumUtil;
 import com.cc.utils.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -85,7 +88,19 @@ public class OrderMasterDTO {
     private Date updateTime;
 
     /**
- * 订单详情列表
- */
-private List<OrderDetail> orderDetailList;
+     * 订单详情列表
+     */
+    private List<OrderDetail> orderDetailList;
+
+    @JsonIgnore
+    // 对象转json格式时，将忽略此方法
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    // 对象转json格式时，将忽略此方法
+    public PayStatusEnum getPayStatusEnum() {
+        return  EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+    }
 }

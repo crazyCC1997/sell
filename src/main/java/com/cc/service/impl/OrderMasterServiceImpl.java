@@ -13,6 +13,7 @@ import com.cc.pojo.OrderDetail;
 import com.cc.pojo.OrderMaster;
 import com.cc.pojo.ProductInfo;
 import com.cc.service.OrderMasterService;
+import com.cc.service.PayService;
 import com.cc.service.ProductInfoService;
 import com.cc.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +51,9 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
     @Autowired
     private ProductInfoService productInfoService;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional
@@ -119,7 +124,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
     public Page<OrderMasterDTO> findList(String buyerOpenid, Pageable pageable) {
         Page<OrderMaster> orderMasterPage = orderMasterDao.findByBuyerOpenid(buyerOpenid, pageable);
         List<OrderMasterDTO> orderMasterDTOList = OrderMaster2OrderMasterDTOConverter.convert(orderMasterPage.getContent());
-        PageImpl<OrderMasterDTO> orderMasterDTOPage = new PageImpl<>(orderMasterDTOList, pageable, orderMasterPage.getTotalPages());
+        PageImpl<OrderMasterDTO> orderMasterDTOPage = new PageImpl<>(orderMasterDTOList, pageable, orderMasterPage.getTotalElements());
         return orderMasterDTOPage;
     }
 
@@ -153,7 +158,7 @@ public class OrderMasterServiceImpl implements OrderMasterService {
 
         //如果已支付，需要退款
         if (orderMasterDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getValue())){
-            //TODO
+            payService.refund(orderMasterDTO);
         }
         return orderMasterDTO;
     }
@@ -202,4 +207,21 @@ public class OrderMasterServiceImpl implements OrderMasterService {
         }
         return orderMasterDTO;
     }
+
+    @Override
+    public Page<OrderMasterDTO> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasterPage = orderMasterDao.findAll(pageable);
+        List<OrderMaster> orderMasterList = orderMasterPage.getContent();
+//        OrderMasterDTO orderMasterDTO = new OrderMasterDTO();
+//        List<OrderMasterDTO> orderMasterDTOList = new ArrayList<>();
+//        for (OrderMaster orderMaster : orderMasterList) {
+//            BeanUtils.copyProperties(orderMaster, orderMasterDTO);
+//            orderMasterDTOList.add(orderMasterDTO);
+//        }
+        List<OrderMasterDTO> orderMasterDTOList = OrderMaster2OrderMasterDTOConverter.convert(orderMasterList);
+        PageImpl<OrderMasterDTO> orderMasterDTOPage = new PageImpl<>(orderMasterDTOList, pageable, orderMasterPage.getTotalElements());
+        return orderMasterDTOPage;
+    }
+
+
 }

@@ -1,19 +1,15 @@
-package com.cc.controller;
+package com.cc.controller.buyer;
 
 import com.cc.converter.OrderForm2OrderMasterDTOConverter;
 import com.cc.dto.OrderMasterDTO;
 import com.cc.enums.ResultEnum;
 import com.cc.exception.SellException;
 import com.cc.form.OrderForm;
-import com.cc.pojo.OrderDetail;
 import com.cc.service.BuyerService;
 import com.cc.service.OrderMasterService;
-import com.cc.service.impl.BuyerServiceImpl;
-import com.cc.service.impl.OrderMasterServiceImpl;
 import com.cc.utils.ResultVoUtil;
 import com.cc.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

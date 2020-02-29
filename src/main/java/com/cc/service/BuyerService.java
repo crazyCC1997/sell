@@ -11,9 +11,21 @@ import com.cc.dto.OrderMasterDTO;
  */
 public interface BuyerService {
 
-    //查询一个订单
+    /**
+     * 查询一个订单
+     *
+     * @param openid
+     * @param orderId
+     * @return
+     */
     OrderMasterDTO findOrderOne(String openid, String orderId);
 
-    //取消订单
+    /**
+     * 取消订单
+     *
+     * @param openid
+     * @param orderId
+     * @return
+     */
     OrderMasterDTO cancelOrder(String openid, String orderId);
 }

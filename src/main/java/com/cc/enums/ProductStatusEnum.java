@@ -1,6 +1,7 @@
 package com.cc.enums;
 
 import lombok.Getter;
+import org.aopalliance.reflect.Code;
 
 /**
  * 商品状态枚举类
@@ -10,7 +11,7 @@ import lombok.Getter;
  * @date 2020/2/11 10:18
  */
 @Getter
-public enum ProductStatusEnum {
+public enum ProductStatusEnum implements CodeEnum {
     UP(0,"在架"),
     DOWN(1, "下架")
     ;

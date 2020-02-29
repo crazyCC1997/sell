@@ -55,4 +55,11 @@ public interface OrderMasterService {
      * @return
      */
     OrderMasterDTO paid(OrderMasterDTO orderMasterDTO);
+
+    /**
+     * 查询所有订单列表
+     * @param pageable
+     * @return
+     */
+    Page<OrderMasterDTO> findList(Pageable pageable);
 }

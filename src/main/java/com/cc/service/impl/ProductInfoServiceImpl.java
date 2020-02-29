@@ -14,7 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 /**
@@ -47,6 +49,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
     public ProductInfo save(ProductInfo productInfo) {
+        if(null == productInfo) {
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
         return productInfoDao.save(productInfo);
     }
 
@@ -80,5 +85,31 @@ public class ProductInfoServiceImpl implements ProductInfoService {
                 throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
         }
+    }
+
+    @Override
+    public ProductInfo onSale(String productId) {
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        if(null == productInfo) {
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(productInfo.getProductStatus() == ProductStatusEnum.UP.getValue()) {
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        productInfo.setProductStatus(ProductStatusEnum.UP.getValue());
+        return productInfoDao.save(productInfo);
+    }
+
+    @Override
+    public ProductInfo offSale(String productId) {
+        ProductInfo productInfo = productInfoDao.findOne(productId);
+        if(null == productInfo) {
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if(productInfo.getProductStatus() == ProductStatusEnum.DOWN.getValue()) {
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+        productInfo.setProductStatus(ProductStatusEnum.DOWN.getValue());
+        return productInfoDao.save(productInfo);
     }
 }

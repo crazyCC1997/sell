@@ -1,12 +1,17 @@
 package com.cc.pojo;
 
+import com.cc.enums.ProductStatusEnum;
+import com.cc.utils.EnumUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 商品
@@ -19,6 +24,7 @@ import java.math.BigDecimal;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 public class ProductInfo {
 
     /**
@@ -55,10 +61,25 @@ public class ProductInfo {
     /**
      * 商品状态  0正常 1下架
      */
-    private Integer productStatus;
+    private Integer productStatus = ProductStatusEnum.UP.getValue();
 
     /**
      * 商品类目
      */
     private Integer categoryType;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum() {
+        return EnumUtil.getByCode(productStatus, ProductStatusEnum.class);
+    }
 }

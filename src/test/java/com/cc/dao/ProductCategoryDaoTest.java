@@ -44,7 +44,7 @@ public class ProductCategoryDaoTest {
     @Test
     public void findByCategoryTypeInTest(){
         List<Integer> list = Arrays.asList(2,3,4);
-        List<ProductCategory> result = productCategoryDao.findByCategoryTypeIn(list);
+        List<ProductCategory> result = productCategoryDao.findByCategoryType(list);
         Assert.assertNotEquals(0, result.size());
     }
 }
