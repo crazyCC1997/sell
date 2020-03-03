@@ -4,6 +4,7 @@ import com.cc.pojo.ProductInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,9 @@ import java.util.List;
  * @date 2020/2/11 11:16
  */
 @Data
-public class ProductVo {
+public class ProductVo implements Serializable {
+
+    private static final long serialVersionUID = 7586064303886322233L;
 
     /**
      * 类目名称

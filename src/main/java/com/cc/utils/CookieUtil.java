@@ -1,8 +1,15 @@
 package com.cc.utils;
 
+import org.apache.http.HttpResponse;
+
+import javax.crypto.MacSpi;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * cookie工具类
@@ -28,6 +35,36 @@ public class CookieUtil {
         response.addCookie(cookie);
     }
 
-    public static void get() {
+    /**
+     * 获取Cookie
+     *
+     * @param request
+     * @param name
+     * @return
+     */
+    public static Cookie get(HttpServletRequest request, String name) {
+        Map<String, Cookie> cookieMap = readCookie2Map(request);
+        if(cookieMap.containsKey(name)) {
+            return cookieMap.get(name);
+        }else {
+            return null;
+        }
+    }
+
+    /**
+     * 将cookie封装成map
+     *
+     * @param request
+     * @return
+     */
+    public static Map<String, Cookie> readCookie2Map(HttpServletRequest request) {
+        HashMap<String, Cookie> cookieMap = new HashMap<>();
+        Cookie[] cookies = request.getCookies();
+        if(null != cookies) {
+            for (Cookie cookie : cookies) {
+                cookieMap.put(cookie.getName(), cookie);
+            }
+        }
+        return cookieMap;
     }
 }

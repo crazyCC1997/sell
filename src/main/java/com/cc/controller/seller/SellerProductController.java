@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -122,7 +124,7 @@ public class SellerProductController {
     }
 
     /**
-     * 保存
+     * 商品修改保存
      *
      * @param productForm
      * @param bindingResult
@@ -130,6 +132,8 @@ public class SellerProductController {
      * @return
      */
     @PostMapping("/save")
+//    @CachePut(cacheNames = "product", key = "123")
+    @CacheEvict(cacheNames = "product", key = "123")
     public String save(@Valid ProductForm productForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("msg", bindingResult.getFieldError().getDefaultMessage());
@@ -141,8 +145,9 @@ public class SellerProductController {
             //如果productId为空，说明是新增
             if (StringUtils.isNotEmpty(productForm.getProductId())) {
                 productInfo = productInfoService.findOne(productForm.getProductId());
+            }else {
+                productForm.setProductId(KeyUtil.genUniqueKey());
             }
-            productForm.setProductId(KeyUtil.genUniqueKey());
             BeanUtils.copyProperties(productForm, productInfo);
             productInfoService.save(productInfo);
         }catch (SellException e) {

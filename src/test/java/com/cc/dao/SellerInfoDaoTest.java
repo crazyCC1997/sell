@@ -29,9 +29,9 @@ public class SellerInfoDaoTest {
                 SellerInfo
                         .builder()
                         .sellerId(KeyUtil.genUniqueKey())
-                        .username("admin")
-                        .password("admin")
-                        .openid("abc")
+                        .username("superAdmin")
+                        .password("superAdmin")
+                        .openid("ab123789")
                         .build()
         );
         Assert.assertTrue("新增成功", sellerInfo != null);

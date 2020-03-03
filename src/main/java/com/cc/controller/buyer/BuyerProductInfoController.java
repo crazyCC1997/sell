@@ -10,6 +10,8 @@ import com.cc.vo.ProductVo;
 import com.cc.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +38,10 @@ public class BuyerProductInfoController {
     private ProductCategoryService productCategoryService;
 
     @GetMapping("/list")
+    @Cacheable(cacheNames = "product", key = "123")
+    //动态指定key  #sellerId(spEL表达式)
+    //@Cacheable(cacheNames = "product", key = "#sellerId", condition = "#sellerId.length() > 3", unless = "#result.getCode() != 0")
+    //public ResultVo list(@RequestParam("sellerId") String sellerId)
     public ResultVo list(){
         //1.查询所有上架的商品
         List<ProductInfo> upProductList = productInfoService.findUpAll();
@@ -49,7 +55,7 @@ public class BuyerProductInfoController {
         List<Integer> categoryTypeList = upProductList.stream()
                 .map(e -> e.getCategoryType())
                 .collect(Collectors.toList());
-        List<ProductCategory> ProductCategoryList = productCategoryService.findByCategoryType(categoryTypeList);
+        List<ProductCategory> ProductCategoryList = productCategoryService.findByCategoryTypeIn(categoryTypeList);
         //3.数据拼装
         ArrayList<ProductVo> productVoList = new ArrayList<>();
         for (ProductCategory productCategory : ProductCategoryList) {

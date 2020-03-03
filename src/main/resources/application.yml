@@ -20,9 +20,9 @@ server:
 #微信公众号配置
 wechat:
   #公众账号、授权
-  mpAppId: wxd898fcb01713c658
+  mpAppId: wx50616d5b9b8d81aa
   #29d8a650db31472aa87800e3b0d739f2
-  mpAppSecret: 29d8a650db31472aa87800e3b0d739f2
+  mpAppSecret: 593d3a9a06e05df87d4c7e75d3efd92a
   openAppId: wx6ad144e54af67d87
   openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
   #支付/商户号
@@ -32,6 +32,9 @@ wechat:
   keyPath: /var/weixin_cert/h5.p12
   #异步通知地址
   notifyUrl: http://cchen1997.natapp1.cc/sell/pay/notify
+  #模板id
+  templateId:
+    orderStatus: ExHDhnyprjwcj7RyIOdXKwlQrbqySvCTNomuWOqImMU
 
 #项目url
 projectUrl:
@@ -39,4 +42,8 @@ projectUrl:
   wechatOpenAuthorize: http://cchen1997.natapp1.cc
   sell: http://cchen1997.natapp1.cc
 
-
+#mybatis:
+#  type-aliases-package: com.cc.pojo
+#  mapper-locations: com.cc.dao.mapper.*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
